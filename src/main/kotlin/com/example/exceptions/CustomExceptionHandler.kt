@@ -12,6 +12,7 @@ class CustomExceptionHandler : ExceptionHandler<Exception, HttpResponse<ErrorRes
 
     @Error(global = true, exception = Exception::class)
     override fun handle(request: HttpRequest<*>?, exception: Exception?): HttpResponse<ErrorResponse> {
+        // We can log request and exception here
         var errorMessage: ErrorResponse
         when (exception) {
             is CustomException -> {

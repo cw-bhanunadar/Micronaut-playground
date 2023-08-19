@@ -14,9 +14,9 @@ class ExceptionController {
         return 1
     }
 
-    @Get("/custom-exception")
+    @Get("/custom")
     suspend fun customException(): Long {
-        throw CustomException(MasterErrorCodes.ERR_1000, "Custom Error")
+        throw CustomException(MasterErrorCodes.ERR_1000, "Custom Error some business logic failed")
         return 1
     }
 }

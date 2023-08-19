@@ -7,7 +7,7 @@ enum class MasterErrorCodes(
     var message: String,
     var httpStatus: HttpStatus
 ) {
-    ERR_1000("ERR_1000", "BAD Request", HttpStatus.BAD_REQUEST);
+    ERR_1000("1000", "BAD Request", HttpStatus.BAD_REQUEST);
 
     fun getMessage(param: String): String {
         if (param != null) {
