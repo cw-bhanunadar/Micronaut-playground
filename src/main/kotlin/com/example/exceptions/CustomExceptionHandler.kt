@@ -1,19 +1,23 @@
 package com.example.exceptions
 
+import com.example.util.logger
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Error
 import io.micronaut.http.server.exceptions.ExceptionHandler
+import io.sentry.Sentry
 import jakarta.inject.Singleton
+import org.slf4j.MDC
 
 @Singleton
 class CustomExceptionHandler : ExceptionHandler<Exception, HttpResponse<ErrorResponse>> {
-
+    private val log = logger()
     @Error(global = true, exception = Exception::class)
     override fun handle(request: HttpRequest<*>?, exception: Exception?): HttpResponse<ErrorResponse> {
         // We can log request and exception here
         var errorMessage: ErrorResponse
+        sendToSentry(exception)
         when (exception) {
             is CustomException -> {
                 errorMessage =
@@ -46,5 +50,12 @@ class CustomExceptionHandler : ExceptionHandler<Exception, HttpResponse<ErrorRes
             HttpResponse.unauthorized()
         else
             HttpResponse.serverError(errorMessage)
+    }
+
+    private fun sendToSentry(exception: Exception?) {
+        log.error(exception?.message)
+        Sentry.withScope {
+            Sentry.captureException(exception!!)
+        }
     }
 }
