@@ -42,4 +42,9 @@ class TestController {
     suspend fun postBody(@Body request: ComplexInput): String? {
         return "${request.first} ${request.second}"
     }
+
+    @Get("/test-sentry")
+    suspend fun testSentry() {
+        throw ArithmeticException("Capture in Entry")
+    }
 }
