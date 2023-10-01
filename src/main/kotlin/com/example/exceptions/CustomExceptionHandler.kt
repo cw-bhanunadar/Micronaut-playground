@@ -8,7 +8,6 @@ import io.micronaut.http.annotation.Error
 import io.micronaut.http.server.exceptions.ExceptionHandler
 import io.sentry.Sentry
 import jakarta.inject.Singleton
-import org.slf4j.MDC
 
 @Singleton
 class CustomExceptionHandler : ExceptionHandler<Exception, HttpResponse<ErrorResponse>> {
