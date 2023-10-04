@@ -6,14 +6,13 @@ plugins {
     id("io.micronaut.application") version "4.0.2"
     id("io.micronaut.aot") version "4.0.2"
 }
-
 version = "0.1"
 group = "com.example"
 
 repositories {
     mavenCentral()
 }
-
+apply plugin: 'kotlin-kapt'
 dependencies {
     implementation('io.micronaut:micronaut-jackson-databind:3.4.3')
     implementation('io.micronaut:micronaut-runtime:3.4.3')
@@ -26,6 +25,14 @@ dependencies {
     implementation('io.zipkin.brave:brave-context-slf4j:5.13.9')
     implementation("io.micronaut.rabbitmq:micronaut-rabbitmq:3.4.0")
     implementation 'io.sentry:sentry:5.7.4'
+
+    implementation('io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE')
+    implementation('io.micronaut.data:micronaut-data-r2dbc:3.9.6')
+    runtimeOnly("org.postgresql:postgresql")
+    implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.8.0')
+
+    kapt("io.micronaut.data:micronaut-data-processor")
+    runtimeOnly("org.yaml:snakeyaml")
 }
 
 
@@ -47,6 +54,7 @@ tasks {
            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
         }
     }
+
 }
 graalvmNative.toolchainDetection = false
 micronaut {
@@ -59,8 +67,8 @@ micronaut {
     aot {
     // Please review carefully the optimizations enabled below
     // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-        optimizeServiceLoading = false
-        convertYamlToJava = false
+        optimizeServiceLoading = true
+        convertYamlToJava = true
         precomputeOperations = true
         cacheEnvironment = true
         optimizeClassLoading = true
@@ -68,6 +76,11 @@ micronaut {
         optimizeNetty = true
     }
 }
-
-
-
+gradle.taskGraph.whenReady { taskGraph -> {
+    taskGraph.getAllTasks()
+            .findAll { it.hasProperty("duplicatesStrategy") }
+            .each { task ->
+                task.setProperty("duplicatesStrategy", "EXCLUDE")
+            }
+    }
+}

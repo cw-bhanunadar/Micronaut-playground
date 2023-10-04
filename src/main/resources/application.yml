@@ -1,6 +1,15 @@
+
+
+r2dbc:
+  datasources:
+    default:
+      url: r2dbc:postgresql://localhost:5432/postgresDB?preparedStatementCacheQueries=0
+      username: postgresUser
+      password: postgresPW
+      dialect: POSTGRES
+
 rabbitmq:
   uri: amqp://${RABBITMQ_USER:guest}:${RABBITMQ_PASS:guest}@${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}
-  consumer-executor: rabbit
 
 sentry:
   dsn: https://50974ac4ec3a89a84b4b70e3c5e02f6b@o4505965347536896.ingest.sentry.io/4505965348978688

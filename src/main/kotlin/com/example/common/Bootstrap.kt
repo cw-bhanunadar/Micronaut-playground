@@ -17,15 +17,20 @@ class Bootstrap {
 
     @Inject
     lateinit var sentryDsn: SentryConfiguration
+
+    @Value("\${r2dbc.datasources.default.url}")
+    private lateinit var rdbc: String
+
     @EventListener
     fun onStartupEvent(event: ServerStartupEvent) {
         configureSentry()
+        log.error(rdbc)
         log.info("This Event got trigger during Startup")
     }
     private fun configureSentry() {
 
         Sentry.init { options: SentryOptions ->
-            options.dsn = sentryDsn.dsn 
+            options.dsn = "https://50974ac4ec3a89a84b4b70e3c5e02f6b@o4505965347536896.ingest.sentry.io/4505965348978688"
             // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
             // We recommend adjusting this value in production.
             options.tracesSampleRate = 1.0
