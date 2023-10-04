@@ -1,6 +1,5 @@
 package com.example.common
 
-import io.micronaut.context.annotation.Value
 import io.micronaut.runtime.event.annotation.EventListener
 import io.micronaut.runtime.server.event.ServerStartupEvent
 import io.sentry.Sentry
@@ -20,7 +19,8 @@ class Bootstrap {
     @EventListener
     fun onStartupEvent(event: ServerStartupEvent) {
         configureSentry()
-        log.info("This Event got trigger during Startup")
+        log.error("This Dummy Event got trigger during Startup")
+        log.error("This Event got trigger during Startup")
     }
     private fun configureSentry() {
 

@@ -26,6 +26,9 @@ dependencies {
     implementation('io.zipkin.brave:brave-context-slf4j:5.13.9')
     implementation("io.micronaut.rabbitmq:micronaut-rabbitmq:3.4.0")
     implementation 'io.sentry:sentry:5.7.4'
+    runtimeOnly("org.yaml:snakeyaml")
+    implementation("ch.qos.logback:logback-classic")
+
 }
 
 
