@@ -9,10 +9,15 @@ import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.QueryValue
 import jakarta.inject.Inject
+import org.thymeleaf.TemplateEngine
+import org.thymeleaf.context.Context
+import java.net.http.HttpResponse
 
 @Controller("/test")
 class TestController {
     private val log = logger()
+    @Inject
+    private lateinit var templateEngine: TemplateEngine
 
     @Inject
     lateinit var publisher: Publisher
@@ -46,5 +51,14 @@ class TestController {
     @Get("/test-sentry")
     suspend fun testSentry() {
         throw ArithmeticException("Capture in Entry")
+    }
+
+    @Get("/test-thymeleaf")
+    suspend fun testThymeleaf(): String {
+        val context = Context()
+        var map = mutableMapOf<String, Any?>()
+        map.put("message", "This is a variable text")
+        context.setVariables(map)
+        return templateEngine.process("hello_world", context)
     }
 }
