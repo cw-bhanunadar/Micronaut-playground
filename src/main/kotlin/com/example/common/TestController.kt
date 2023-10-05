@@ -20,6 +20,8 @@ import java.io.FileOutputStream
 @Controller("/test")
 class TestController {
     private val log = logger()
+    @Inject
+    private lateinit var templateEngine: TemplateEngine
 
     @Inject
     lateinit var publisher: Publisher
