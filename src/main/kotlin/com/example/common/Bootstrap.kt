@@ -25,7 +25,7 @@ class Bootstrap {
     private fun configureSentry() {
 
         Sentry.init { options: SentryOptions ->
-            options.dsn = sentryDsn.dsn 
+            options.dsn = sentryDsn.dsn
             // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
             // We recommend adjusting this value in production.
             options.tracesSampleRate = 1.0

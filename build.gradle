@@ -29,6 +29,9 @@ dependencies {
     runtimeOnly("org.yaml:snakeyaml")
     implementation("ch.qos.logback:logback-classic")
 
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
+    implementation("org.thymeleaf:thymeleaf")
+
 }
 
 
