@@ -25,8 +25,6 @@ class TestController {
 
     @Inject
     lateinit var publisher: Publisher
-    @Inject
-    private lateinit var templateEngine: TemplateEngine
     @Get("/simple/{params}")
     suspend fun pathVariable(params: Long): Long? {
         publisher.emitEventNumber(params)
