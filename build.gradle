@@ -32,6 +32,10 @@ dependencies {
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     implementation("org.thymeleaf:thymeleaf")
 
+    implementation 'org.jsoup:jsoup:1.15.1'
+    implementation 'com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10'
+
+
 }
 
 

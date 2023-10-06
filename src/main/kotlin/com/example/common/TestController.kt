@@ -2,6 +2,7 @@ package com.example.common
 
 import com.example.event.Publisher
 import com.example.util.logger
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
@@ -9,9 +10,12 @@ import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.QueryValue
 import jakarta.inject.Inject
+import org.jsoup.Jsoup
+import org.jsoup.helper.W3CDom
+import org.jsoup.nodes.Document
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
-import java.net.http.HttpResponse
+import java.io.FileOutputStream
 
 @Controller("/test")
 class TestController {
@@ -60,5 +64,25 @@ class TestController {
         map.put("message", "This is a variable text")
         context.setVariables(map)
         return templateEngine.process("hello_world", context)
+    }
+
+    @Get("/generate-pdf")
+    suspend fun generatePdf() {
+        var html = testThymeleaf()
+        val outputPath = "/Users/bhanu/temp/your_filename.pdf"
+        val document = getHtmlDocument(html)
+        FileOutputStream(outputPath).use { os ->
+            val builder = PdfRendererBuilder()
+            builder.withUri(outputPath)
+            builder.toStream(os)
+            builder.withW3cDocument(W3CDom().fromJsoup(document), "/")
+            builder.run()
+        }
+    }
+
+    private fun getHtmlDocument(html: String): Document {
+        val document: Document = Jsoup.parse(html, "UTF-8")
+        document.outputSettings().syntax(Document.OutputSettings.Syntax.xml)
+        return document
     }
 }
