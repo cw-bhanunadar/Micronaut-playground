@@ -14,6 +14,10 @@ repositories {
 }
 apply plugin: 'kotlin-kapt'
 dependencies {
+    kapt('io.micronaut:micronaut-http-validation:3.4.3')
+    kapt("io.micronaut.data:micronaut-data-processor:3.3.0")
+    kapt('io.micronaut.openapi:micronaut-openapi:4.0.1')
+
     implementation('io.micronaut:micronaut-jackson-databind:3.4.3')
     implementation('io.micronaut:micronaut-runtime:3.4.3')
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
@@ -26,12 +30,12 @@ dependencies {
     implementation("io.micronaut.rabbitmq:micronaut-rabbitmq:3.4.0")
     implementation 'io.sentry:sentry:5.7.4'
 
-    implementation('io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE')
-    implementation('io.micronaut.data:micronaut-data-r2dbc:3.9.6')
+    implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.3.0')
+    implementation("io.r2dbc:r2dbc-postgresql:0.8.12.RELEASE")
     runtimeOnly("org.postgresql:postgresql")
-    implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.8.0')
+    implementation("io.micronaut.data:micronaut-data-r2dbc:3.5.0-SNAPSHOT")
 
-    kapt("io.micronaut.data:micronaut-data-processor")
+
     runtimeOnly("org.yaml:snakeyaml")
     implementation("ch.qos.logback:logback-classic")
 
@@ -40,8 +44,6 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.15.1'
     implementation 'com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10'
-
-
 }
 
 
@@ -85,11 +87,4 @@ micronaut {
         optimizeNetty = true
     }
 }
-gradle.taskGraph.whenReady { taskGraph -> {
-    taskGraph.getAllTasks()
-            .findAll { it.hasProperty("duplicatesStrategy") }
-            .each { task ->
-                task.setProperty("duplicatesStrategy", "EXCLUDE")
-            }
-    }
-}
+tasks.withType(Jar).all { duplicatesStrategy 'exclude' }
