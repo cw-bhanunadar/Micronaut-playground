@@ -37,7 +37,6 @@ dependencies {
 
     implementation('io.swagger.core.v3:swagger-annotations:2.2.8')
     kapt('io.micronaut.openapi:micronaut-openapi:4.8.5')
-    kapt('io.micronaut.data:micronaut-data-processor:3.9.6')
 }
 
 
