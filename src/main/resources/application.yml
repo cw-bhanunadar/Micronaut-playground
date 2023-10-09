@@ -3,3 +3,14 @@ rabbitmq:
 
 sentry:
   dsn: https://50974ac4ec3a89a84b4b70e3c5e02f6b@o4505965347536896.ingest.sentry.io/4505965348978688
+
+micronaut:
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        enabled: true
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
