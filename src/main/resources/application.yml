@@ -11,5 +11,6 @@ micronaut:
         paths: classpath:META-INF/swagger
         mapping: /swagger/**
       swagger-ui:
+        enabled: true
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
