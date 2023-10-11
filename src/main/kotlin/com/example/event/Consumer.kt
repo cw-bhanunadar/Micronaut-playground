@@ -9,5 +9,6 @@ class Consumer {
     @Queue("event-number", prefetch = 1)
     fun consumeEventNumber(eventNumber: Long) {
         logger().error("Successfully received event" + eventNumber.toString())
+        throw ArithmeticException()
     }
 }
