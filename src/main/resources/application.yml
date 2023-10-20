@@ -1,12 +1,10 @@
-
-
-r2dbc:
-  datasources:
-    default:
-      url: r2dbc:postgresql://localhost:5432/postgresDB?preparedStatementCacheQueries=0
-      username: postgresUser
-      password: postgresPW
-      dialect: POSTGRES
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/postgresDB?preparedStatementCacheQueries=0
+    driverClassName: org.postgresql.Driver
+    username: postgresUser
+    password: postgresPW
+    dialect: POSTGRES
 
 rabbitmq:
   uri: amqp://${RABBITMQ_USER:guest}:${RABBITMQ_PASS:guest}@${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}

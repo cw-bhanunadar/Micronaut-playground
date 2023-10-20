@@ -18,13 +18,9 @@ class Bootstrap {
     @Inject
     lateinit var sentryDsn: SentryConfiguration
 
-    @Value("\${r2dbc.datasources.default.url}")
-    private lateinit var rdbc: String
-
     @EventListener
     fun onStartupEvent(event: ServerStartupEvent) {
         configureSentry()
-        log.error(rdbc)
         log.info("This Event got trigger during Startup")
         log.error("This Dummy Event got trigger during Startup")
         log.error("This Event got trigger during Startup")

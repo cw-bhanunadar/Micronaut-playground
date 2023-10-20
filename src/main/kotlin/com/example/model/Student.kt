@@ -5,7 +5,7 @@ import io.micronaut.data.annotation.GeneratedValue
 import io.micronaut.data.annotation.Id
 import io.micronaut.data.annotation.MappedEntity
 
-@MappedEntity(value = "invoices")
+@MappedEntity(value = "students")
 @Introspected
 data class Student(
     @field:Id @GeneratedValue var id: Long?,

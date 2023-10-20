@@ -21,6 +21,6 @@ class StudentController {
 
     @Get("/{id}")
     suspend fun get(@PathVariable id: Long): Student? {
-        return studentRepository.findById(id)
+        return studentRepository.findById(id).get()
     }
 }
