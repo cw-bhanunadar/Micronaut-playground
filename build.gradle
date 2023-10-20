@@ -6,17 +6,17 @@ plugins {
     id("io.micronaut.application") version "4.0.2"
     id("io.micronaut.aot") version "4.0.2"
 }
+
+apply plugin: 'kotlin-kapt'
 version = "0.1"
 group = "com.example"
 
 repositories {
     mavenCentral()
 }
-apply plugin: 'kotlin-kapt'
 dependencies {
     kapt('io.micronaut:micronaut-http-validation:3.4.3')
     kapt("io.micronaut.data:micronaut-data-processor:3.3.0")
-    kapt('io.micronaut.openapi:micronaut-openapi:4.0.1')
 
     implementation('io.micronaut:micronaut-jackson-databind:3.4.3')
     implementation('io.micronaut:micronaut-runtime:3.4.3')
@@ -43,6 +43,9 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.15.1'
     implementation 'com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10'
+
+    implementation('io.swagger.core.v3:swagger-annotations:2.2.8')
+    kapt('io.micronaut.openapi:micronaut-openapi:4.8.5')
 }
 
 
@@ -87,3 +90,8 @@ micronaut {
     }
 }
 tasks.withType(Jar).all { duplicatesStrategy 'exclude' }
+
+tasks.withType(JavaCompile) {
+    options.fork = true
+    options.forkOptions.jvmArgs << '-Dmicronaut.openapi.views.spec=rapidoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop'
+}

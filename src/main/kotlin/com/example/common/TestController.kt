@@ -9,6 +9,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.PathVariable
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.QueryValue
+import io.swagger.v3.oas.annotations.Operation
 import jakarta.inject.Inject
 import org.jsoup.Jsoup
 import org.jsoup.helper.W3CDom
@@ -58,6 +59,7 @@ class TestController {
     }
 
     @Get("/test-thymeleaf")
+    @Operation(summary = "Thymeleaf test endpoint")
     suspend fun testThymeleaf(): String {
         val context = Context()
         var map = mutableMapOf<String, Any?>()
