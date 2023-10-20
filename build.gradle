@@ -6,6 +6,7 @@ plugins {
     id("io.micronaut.application") version "4.0.2"
     id("io.micronaut.aot") version "4.0.2"
 }
+
 apply plugin: 'kotlin-kapt'
 version = "0.1"
 group = "com.example"
@@ -13,8 +14,10 @@ group = "com.example"
 repositories {
     mavenCentral()
 }
-
 dependencies {
+    kapt('io.micronaut:micronaut-http-validation:3.4.3')
+    kapt("io.micronaut.data:micronaut-data-processor:3.3.0")
+
     implementation('io.micronaut:micronaut-jackson-databind:3.4.3')
     implementation('io.micronaut:micronaut-runtime:3.4.3')
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
@@ -26,6 +29,12 @@ dependencies {
     implementation('io.zipkin.brave:brave-context-slf4j:5.13.9')
     implementation("io.micronaut.rabbitmq:micronaut-rabbitmq:3.4.0")
     implementation 'io.sentry:sentry:5.7.4'
+
+    implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.3.0')
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    runtimeOnly("org.postgresql:postgresql")
+
+
     runtimeOnly("org.yaml:snakeyaml")
     implementation("ch.qos.logback:logback-classic")
 
@@ -58,6 +67,7 @@ tasks {
            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
         }
     }
+
 }
 graalvmNative.toolchainDetection = false
 micronaut {
@@ -70,8 +80,8 @@ micronaut {
     aot {
     // Please review carefully the optimizations enabled below
     // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
-        optimizeServiceLoading = false
-        convertYamlToJava = false
+        optimizeServiceLoading = true
+        convertYamlToJava = true
         precomputeOperations = true
         cacheEnvironment = true
         optimizeClassLoading = true
@@ -80,15 +90,8 @@ micronaut {
     }
 }
 tasks.withType(Jar).all { duplicatesStrategy 'exclude' }
+
 tasks.withType(JavaCompile) {
     options.fork = true
     options.forkOptions.jvmArgs << '-Dmicronaut.openapi.views.spec=rapidoc.enabled=true,swagger-ui.enabled=true,swagger-ui.theme=flattop'
 }
-
-
-
-
-
-
-
-
