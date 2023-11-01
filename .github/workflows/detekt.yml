@@ -1,0 +1,20 @@
+name: Detekt
+on:
+  pull_request:
+
+jobs:
+  detekt:
+    runs-on: ubuntu-latest
+
+    steps:
+      # https://github.com/marketplace/actions/checkout
+      - uses: actions/checkout@v3
+
+      # https://github.com/marketplace/actions/run-detekt-with-reviewdog
+      - name: Run detekt with reviewdog
+        uses: alaegin/Detekt-Action@v1.22.0-RC3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          detekt_config: config/detekt/detekt.yml
+          reporter: github-pr-review
+          fail_on_error: false
