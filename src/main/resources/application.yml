@@ -6,13 +6,14 @@ datasources:
     password: postgresPW
     dialect: POSTGRES
 
-rabbitmq:
-  uri: amqp://${RABBITMQ_USER:guest}:${RABBITMQ_PASS:guest}@${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}
 
 sentry:
   dsn: https://50974ac4ec3a89a84b4b70e3c5e02f6b@o4505965347536896.ingest.sentry.io/4505965348978688
 
 micronaut:
+  executors:
+    consumer:
+      type: FIXED
   router:
     static-resources:
       swagger:
@@ -22,3 +23,8 @@ micronaut:
         enabled: true
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
+
+kafka:
+  bootstrap:
+    servers: localhost:29092
+
