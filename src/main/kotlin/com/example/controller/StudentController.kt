@@ -23,4 +23,9 @@ class StudentController {
     suspend fun get(@PathVariable id: Long): Student? {
         return studentRepository.findById(id).get()
     }
+
+    @Get("/list/{name}")
+    suspend fun getStudents(@PathVariable name: String): List<Student> {
+        return studentRepository.getStudents(name)
+    }
 }
