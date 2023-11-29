@@ -1,10 +1,10 @@
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/postgresDB?preparedStatementCacheQueries=0
-    driverClassName: org.postgresql.Driver
-    username: postgresUser
-    password: postgresPW
-    dialect: POSTGRES
+    url: jdbc:mysql://localhost:3306/my_sql?preparedStatementCacheQueries=0
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: sqlUser
+    password: sqlPassword
+    dialect: MYSQL
 
 rabbitmq:
   uri: amqp://${RABBITMQ_USER:guest}:${RABBITMQ_PASS:guest}@${RABBITMQ_HOST:localhost}:${RABBITMQ_PORT:5672}

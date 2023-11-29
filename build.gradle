@@ -32,7 +32,7 @@ dependencies {
 
     implementation('io.micronaut.sql:micronaut-jdbc-hikari:4.3.0')
     implementation("io.micronaut.data:micronaut-data-jdbc")
-    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("mysql:mysql-connector-java")
 
 
     runtimeOnly("org.yaml:snakeyaml")
