@@ -1,6 +1,7 @@
 package com.example.common
 
-import com.example.event.Publisher
+import com.example.event.KafkaProducer
+import com.example.model.Student
 import com.example.util.logger
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder
 import io.micronaut.http.annotation.Body
@@ -25,10 +26,10 @@ class TestController {
     private lateinit var templateEngine: TemplateEngine
 
     @Inject
-    lateinit var publisher: Publisher
+    lateinit var kafkaProducer: KafkaProducer
     @Get("/simple/{params}")
     suspend fun pathVariable(params: Long): Long? {
-        publisher.emitEventNumber(params)
+        // publisher.emitEventNumber(params)
         log.error("This is a test error")
         return params
     }
@@ -56,6 +57,12 @@ class TestController {
     @Get("/test-sentry")
     suspend fun testSentry() {
         throw ArithmeticException("Capture in Entry")
+    }
+
+    @Post("/post-student-kafka")
+    suspend fun kafkaStudentProcessing(@Body request: Student): String? {
+        kafkaProducer.send(request)
+        return request.toString()
     }
 
     @Get("/test-thymeleaf")
