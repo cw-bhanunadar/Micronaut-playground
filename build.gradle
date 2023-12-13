@@ -46,6 +46,11 @@ dependencies {
 
     implementation('io.swagger.core.v3:swagger-annotations:2.2.8')
     kapt('io.micronaut.openapi:micronaut-openapi:4.8.5')
+
+
+    // Metrics instrumentation libraries
+    implementation "io.micronaut.micrometer:micronaut-micrometer-core"
+    implementation "io.micronaut:micronaut-management"
 }
 
 
